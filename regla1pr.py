@@ -13,8 +13,8 @@ Nf = 25 # Numero de filas
 Nc = 1 # Numero de columnas
 aR1 = "" # Inicializa la regla
 c = 0 # Contador de &
-LcaminosD = [chr(i) for i in range(65, 65 + Nf*Nc)] #Letras de los caminos A'
-LcaminosIR = [chr(i)+"'" for i in range(65, 65 + Nf*Nc)]
+LcaminosD = [chr(i) for i in range(65, 65 + Nf*Nc)] #Letras de los caminos A
+LcaminosIR = [chr(i)+"'" for i in range(65, 65 + Nf*Nc)] #Letras de los caminos A'
 LcaminosIR1 = ["'"+chr(i) for i in range(65, 65 + Nf*Nc)] #Letras de los caminos inversos
 LcaminosT = LcaminosD + LcaminosIR
 

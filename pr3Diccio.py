@@ -6,6 +6,7 @@ Created on Sun Mar 29 14:32:19 2020
 @author: juanitotelo
 """
 from PIL import Image,ImageDraw
+import regla1pr
 import random
 
 def dibujar_flecha(I,C):
@@ -128,4 +129,4 @@ def dibujar_solucion():
 		I2.save("mapacF0.png",format="png")
 		print("Camino dibujado.")
 
-dibujar_solucion()
+
