@@ -172,12 +172,12 @@ def clasifica_y_extiende(f,h):
 	global listaHojas
 	clasificacion = alfa_beta(f)
 	if clasificacion=='HOJA':
-		print("HOJA")
+		# ~ print("HOJA")
 		listaHojas.remove([f])
 		listaHojas.append(f)
 		
 	elif clasificacion == 'a1':
-		print("a1")
+		# ~ print("a1")
 		aux = [x for x in h]
 		hijo = f.right.right
 		aux.remove(f)
@@ -186,7 +186,7 @@ def clasifica_y_extiende(f,h):
 		listaHojas.append(aux)
 		
 	elif clasificacion=='a2':
-		print("a2")
+		# ~ print("a2")
 		aux = [x for x in h]
 		hijo_izq=f.left
 		hijo_der=f.right
@@ -197,7 +197,7 @@ def clasifica_y_extiende(f,h):
 		listaHojas.append(aux)
 		
 	elif clasificacion=='a3':
-		print("a3")
+		# ~ print("a3")
 		aux = [x for x in h]
 		hijo_izq=Tree('~',None,(f.right).left)
 		hijo_der=Tree('~',None,(f.right).right)
@@ -208,7 +208,7 @@ def clasifica_y_extiende(f,h):
 		listaHojas.append(aux)
 		
 	elif clasificacion=='a4':
-		print("a4")
+		# ~ print("a4")
 		aux = [x for x in h]
 		hijo_izq=(f.right).left
 		hijo_der=Tree('~',None,(f.right).right)
@@ -219,7 +219,7 @@ def clasifica_y_extiende(f,h):
 		listaHojas.append(aux)
 		
 	elif clasificacion=='a5':
-		print("a5")
+		# ~ print("a5")
 		aux = [x for x in h]
 		hiz = Tree('>',f.left,f.right)
 		hde = Tree('>',f.right,f.left)
@@ -231,7 +231,7 @@ def clasifica_y_extiende(f,h):
 		
 		
 	elif clasificacion=='b1':
-		print("b1")
+		# ~ print("b1")
 		aux = [x for x in h]
 		hijo_izq=Tree('~',None,(f.right).left)
 		hijo_der=Tree('~',None,(f.right).right)
@@ -240,7 +240,7 @@ def clasifica_y_extiende(f,h):
 		listaHojas.append(hijo_der)
 		
 	elif clasificacion=='b2':
-		print("b2")
+		# ~ print("b2")
 		aux = [x for x in h]
 		hijo_izq=f.left
 		hijo_der=f.right
@@ -251,7 +251,7 @@ def clasifica_y_extiende(f,h):
 		listaHojas.append(aux)
 		
 	elif clasificacion=='b3':
-		print("b3")
+		# ~ print("b3")
 		aux = [x for x in h]
 		hijo_izq=Tree('~', None, f.left)
 		hijo_der=f.right
@@ -262,7 +262,7 @@ def clasifica_y_extiende(f,h):
 		listaHojas.append(aux)
 		
 	elif clasificacion=='b4':
-		print("b4")
+		# ~ print("b4")
 		aux = [x for x in h]
 		hiz = Tree('~', None,Tree('>',f.left,f.right))
 		hde = Tree('~', None,Tree('>',f.right,f.left))

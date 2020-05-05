@@ -1,3 +1,4 @@
+from termcolor import colored,cprint
 import tableauxJ as T
 class Tree:
 	def __init__(self,l,iz,dr):
@@ -22,7 +23,7 @@ for i in range(len(LcaminosD)):
 	c+=1
 
 R1 = aR1[::-1]+"&"*(c-1)
-# ~ print("Formula en notación polaca inversa:\n",R1,"\n")
+print ("Formula en notación polaca inversa:\n",colored(R1,"yellow"),"\n")
 
 def Inorder(f):
     # Imprime una formula como cadena dada una formula como arbol
@@ -67,7 +68,7 @@ def string2Tree(A, letrasProposicionales):
 	# ~ print(pila[-1])
 	return pila[-1]
 
-R1 = "PQ>~Ro"
+
 R1S = string2Tree(R1, LcaminosT)
 print("Formula en notación normal:\n",Inorder(R1S))
 ta = T.Tableaux(R1)
