@@ -1,4 +1,5 @@
 from termcolor import colored,cprint
+
 import tableauxJ as T
 class Tree:
 	def __init__(self,l,iz,dr):
@@ -13,8 +14,8 @@ Nf = 25 # Numero de filas
 Nc = 1 # Numero de columnas
 aR1 = "" # Inicializa la regla
 c = 0 # Contador de &
-LcaminosD = [chr(i) for i in range(65, 65 + Nf*Nc)] #Letras de los caminos A
-LcaminosIR = [chr(i)+"'" for i in range(65, 65 + Nf*Nc)] #Letras de los caminos A'
+LcaminosD = [chr(i) for i in range(65, 65 + Nf*Nc)] #Letras de los caminos A'
+LcaminosIR = [chr(i)+"'" for i in range(65, 65 + Nf*Nc)]
 LcaminosIR1 = ["'"+chr(i) for i in range(65, 65 + Nf*Nc)] #Letras de los caminos inversos
 LcaminosT = LcaminosD + LcaminosIR
 
@@ -23,7 +24,7 @@ for i in range(len(LcaminosD)):
 	c+=1
 
 R1 = aR1[::-1]+"&"*(c-1)
-print ("Formula en notación polaca inversa:\n",colored(R1,"yellow"),"\n")
+print (colored("Formula en notación polaca inversa:\n","yellow",attrs=['bold']),R1,"\n")
 
 def Inorder(f):
     # Imprime una formula como cadena dada una formula como arbol
@@ -68,14 +69,16 @@ def string2Tree(A, letrasProposicionales):
 	# ~ print(pila[-1])
 	return pila[-1]
 
-
+R1 = "PR>~R'o"
 R1S = string2Tree(R1, LcaminosT)
-print("Formula en notación normal:\n",Inorder(R1S))
+
+print(colored("Formula en notación normal:\n","yellow",attrs=['bold']),Inorder(R1S))
 ta = T.Tableaux(R1)
 if len(ta) == 0:
-	print('La fórmula es insatisfacible')
+	print(colored('La fórmula es insatisfacible',"red",attrs=['bold','blink']))
 else:
-	print('La fórmula es satisfacible.')
-	print('Las hojas abiertas del tableaux son:')
+	print(colored('La fórmula es satisfacible.',"green",attrs=['bold']))
+	print(colored('Las hojas abiertas del tableaux son:',"magenta",attrs=['bold']))
 	for l in ta:
 		print(T.imprime_hoja(l))
+

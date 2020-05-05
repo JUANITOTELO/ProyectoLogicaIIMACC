@@ -1,5 +1,6 @@
 #-*-coding: utf-8-*-
 from random import choice
+from termcolor import colored,cprint
 ##############################################################################
 # Variables globales
 ##############################################################################
@@ -65,7 +66,7 @@ def string2Tree(A, letrasProposicionales):
 			pila.append(formulaAux)
 		# ~ print(pila[0].label)
 		d += 1
-	# ~ print(pila[-1])
+	# ~ print(colored(pila[-1],"red"))
 	return pila[-1]
 
 ##############################################################################
