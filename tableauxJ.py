@@ -1,13 +1,14 @@
 #-*-coding: utf-8-*-
 from random import choice
 from termcolor import colored,cprint
+import string
+from string import ascii_letters 
 ##############################################################################
 # Variables globales
 ##############################################################################
-Nf = 25 # Numero de filas
-Nc = 1 # Numero de columnas
-LcaminosIR = [chr(i)+"'" for i in range(65, 65 + Nf*Nc)]
-letrasProposicionales = [chr(i) for i in range(65, 65 + Nf*Nc)]+LcaminosIR
+LcaminosIR = [i for i in string.ascii_lowercase]
+letrasProposicionales = [i for i in string.ascii_uppercase]
+ltotales = letrasProposicionales+LcaminosIR
 # inicializa la lista de interpretaciones
 listaInterpsVerdaderas = []
 # inicializa la lista de hojas
@@ -16,6 +17,24 @@ listaHojas = []
 ##############################################################################
 # Definición de objeto tree y funciones de árboles
 ##############################################################################
+def Inorder(f):
+	# Imprime una formula como cadena dada una formula como arbol
+	# Input: tree, que es una formula de logica proposicional
+	# Output: string de la formula
+	if f.right == None:
+		return f.label
+	elif f.label == '~':
+		return colored(f.label, "red", attrs =['bold']) + Inorder(f.right)
+	else:
+		if f.label == '&':
+			return "(" + Inorder(f.left) + colored(f.label, "cyan", attrs =['bold']) + Inorder(f.right) + ")"
+		if f.label == '>':
+			return "(" + Inorder(f.left) + colored(f.label, "blue", attrs =['bold']) + Inorder(f.right) + ")"
+		if f.label == '=':
+			return "(" + Inorder(f.left) + colored(f.label, "green", attrs =['bold']) + Inorder(f.right) + ")"
+		if f.label == '+':
+			return "(" + Inorder(f.left) + colored(f.label, "magenta", attrs =['bold']) + Inorder(f.right) + ")"
+		
 class Tree(object):
 	def __init__(self, label, left, right):
 		self.left = left
@@ -26,35 +45,24 @@ class Tree(object):
 	def __str__(self):
 		return "Tree({0},{1},{2})".format( self.label, self.left, self.right)
 
-def Inorder(f):
-	# Imprime una formula como cadena dada una formula como arbol
-	# Input: tree, que es una formula de logica proposicional
-	# Output: string de la formula
-	if f.right == None:
-		return f.label
-	elif f.label == '~':
-		return f.label + Inorder(f.right)
-	else:
-		return "(" + Inorder(f.left) + f.label + Inorder(f.right) + ")"
 
-def string2Tree(A, letrasProposicionales):
+def string2Tree(A, ltotales):
 	# Crea una formula como tree dada una formula
 	# como cadena escrita en notacion polaca inversa
 	# Input: A, lista de caracteres con una formula escrita en notacion polaca inversa
 	#
 	# Output: formula como tree
-	conectivos = ['&','o','>','=']
+	conectivos = ['&','+','>','=']
 	pila = []
 	d = 0
+	# ~ print(A)
 	for c in A:
-		e = A.find(c+"'")
-		# ~ print("A.find =",e,c, "d =",d,A[d])
-		if (e == d):
-			pila.append(Tree(c+"'", None, None))
+		# ~ e = A.find(A[d]+"'")
+		# ~ print("A.find =",e,"c =",c, "d =",d, "A[d] =",A[d])
 			# ~ print(Inorder(Tree(c+"'", None, None)),"entroo.")
-		elif c in letrasProposicionales:
+		if c in ltotales:
 			pila.append(Tree(c, None, None))
-			# ~ print(Inorder(Tree(c, None, None)), "tambien entroo.")
+		# ~ print(Inorder(Tree(c, None, None)), "tambien entroo.")
 		elif c == '~':
 			formulaAux = Tree(c, None, pila[-1])
 			del pila[-1]
@@ -115,7 +123,7 @@ def es_literal(f):
 	# Input: f, una fórmula como árbol
 	# Output: True/False
 	#El input tiene esta forma: Tree(p,None,None)
-	Conectivos = ['o','&','>','=']
+	Conectivos = ['+','&','>','=']
 	if f.label in Conectivos:
 		return False
 	elif f.label=='~':
@@ -141,26 +149,27 @@ def no_literales(l):
 
 
 def alfa_beta(f):
+	# ~ print(f.label)
 	if f.label=='~':
-		if (f.right).label=='~': #Doble negación
+		if f.right.label=='~': #Doble negación
 			return 'a1'
-		elif (f.right).label=='o': #¬(A1oA2)
+		elif f.right.label=='+': #¬(A1oA2)
 			return 'a3'
-		elif (f.right).label=='>': #¬(A1>A2)
+		elif f.right.label=='>': #¬(A1->A2)
 			return 'a4'
-		elif (f.right).label=='&': #¬(B1∧B2)
+		elif f.right.label=='&': #¬(B1∧B2)
 			return 'b1'
-		elif (f.right).label=='=':
+		elif f.right.label=='=': #¬(B1<->B2)
 			return 'b4'
 		else:
 			return 'HOJA'
-	elif f.label=='&': #(A1∧ A2)
+	elif f.label=='&': #(A1 ∧ A2)
 		return 'a2'
-	elif f.label=='o': #(B1 o B2)
+	elif f.label=='+': #(B1 o B2)
 		return 'b2'
-	elif f.label=='>':
+	elif f.label=='>': #(B! -> B2)
 		return 'b3'
-	elif f.label == '=': # (A1%a2)
+	elif f.label == '=': # (A1<->a2)
 		return 'a5'
 	else:
 		return 'HOJA'
@@ -198,7 +207,6 @@ def clasifica_y_extiende(f,h):
 		listaHojas.append(aux)
 		
 	elif clasificacion=='a3':
-		# ~ print("a3")
 		aux = [x for x in h]
 		hijo_izq=Tree('~',None,(f.right).left)
 		hijo_der=Tree('~',None,(f.right).right)
@@ -207,6 +215,9 @@ def clasifica_y_extiende(f,h):
 		aux.append(hijo_izq)
 		listaHojas.remove(h)
 		listaHojas.append(aux)
+		# ~ print("a3")
+		# ~ for i in aux:
+			# ~ print(Inorder(i))
 		
 	elif clasificacion=='a4':
 		# ~ print("a4")
@@ -257,8 +268,8 @@ def clasifica_y_extiende(f,h):
 		hijo_izq=Tree('~', None, f.left)
 		hijo_der=f.right
 		aux.remove(f)
-		aux.append(hijo_der)
 		aux.append(hijo_izq)
+		aux.append(hijo_der)
 		listaHojas.remove(h)
 		listaHojas.append(aux)
 		
@@ -280,9 +291,9 @@ def Tableaux(f):
 	# verdadera a f
 	global listaHojas
 	global listaInterpsVerdaderas
-	global letrasProposicionales
+	global ltotales
 
-	A = string2Tree(f,letrasProposicionales)
+	A = string2Tree(f,ltotales)
 	listaHojas = [[A]]
 
 	while len(listaHojas)>0:

@@ -121,10 +121,10 @@ def dibujar_flecha(I,C):
 	return text_img
 
 def dibujar_solucion():
-	f1 = dibujar_flecha("Provinces_of_Spain-2.png","A")
+	f1 = dibujar_flecha("Provinces_of_Spain-2.png","A'")
 	f1.save("mapacF0.png",format="png")
 	for i in range(25):
-		n = chr(65+i)
+		n = chr(65+i)+"'"
 		I2 = dibujar_flecha("mapacF0.png", n)
 		I2.save("mapacF0.png",format="png")
 		print("Camino dibujado.")
