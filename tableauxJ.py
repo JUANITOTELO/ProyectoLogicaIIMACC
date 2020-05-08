@@ -2,7 +2,7 @@
 from random import choice
 from termcolor import colored,cprint
 import string
-from string import ascii_letters 
+from string import ascii_letters
 ##############################################################################
 # Variables globales
 ##############################################################################
@@ -34,7 +34,7 @@ def Inorder(f):
 			return "(" + Inorder(f.left) + colored(f.label, "green", attrs =['bold']) + Inorder(f.right) + ")"
 		if f.label == '+':
 			return "(" + Inorder(f.left) + colored(f.label, "magenta", attrs =['bold']) + Inorder(f.right) + ")"
-		
+
 class Tree(object):
 	def __init__(self, label, left, right):
 		self.left = left
@@ -74,7 +74,7 @@ def string2Tree(A, ltotales):
 			pila.append(formulaAux)
 		# ~ print(pila[0].label)
 		d += 1
-	# ~ print(colored(pila[-1],"red"))
+	# print(colored(pila[-1],"red"))
 	return pila[-1]
 
 ##############################################################################
@@ -185,18 +185,18 @@ def clasifica_y_extiende(f,h):
 		# ~ print("HOJA")
 		listaHojas.remove([f])
 		listaHojas.append(f)
-		
+
 	elif clasificacion == 'a1':
-		# ~ print("a1")
+		print("a1")
 		aux = [x for x in h]
 		hijo = f.right.right
 		aux.remove(f)
 		aux.append(hijo)
 		listaHojas.remove(h)
 		listaHojas.append(aux)
-		
+
 	elif clasificacion=='a2':
-		# ~ print("a2")
+		print("a2")
 		aux = [x for x in h]
 		hijo_izq=f.left
 		hijo_der=f.right
@@ -205,7 +205,7 @@ def clasifica_y_extiende(f,h):
 		aux.append(hijo_izq)
 		listaHojas.remove(h)
 		listaHojas.append(aux)
-		
+
 	elif clasificacion=='a3':
 		aux = [x for x in h]
 		hijo_izq=Tree('~',None,(f.right).left)
@@ -215,12 +215,12 @@ def clasifica_y_extiende(f,h):
 		aux.append(hijo_izq)
 		listaHojas.remove(h)
 		listaHojas.append(aux)
-		# ~ print("a3")
-		# ~ for i in aux:
-			# ~ print(Inorder(i))
-		
+		print("a3")
+		# for i in aux:
+		# 	print(Inorder(i))
+
 	elif clasificacion=='a4':
-		# ~ print("a4")
+		print("a4")
 		aux = [x for x in h]
 		hijo_izq=(f.right).left
 		hijo_der=Tree('~',None,(f.right).right)
@@ -229,9 +229,9 @@ def clasifica_y_extiende(f,h):
 		aux.append(hijo_izq)
 		listaHojas.remove(h)
 		listaHojas.append(aux)
-		
+
 	elif clasificacion=='a5':
-		# ~ print("a5")
+		print("a5")
 		aux = [x for x in h]
 		hiz = Tree('>',f.left,f.right)
 		hde = Tree('>',f.right,f.left)
@@ -240,19 +240,19 @@ def clasifica_y_extiende(f,h):
 		aux.append(hde)
 		listaHojas.remove(h)
 		listaHojas.append(aux)
-		
-		
+
+
 	elif clasificacion=='b1':
-		# ~ print("b1")
+		print("b1")
 		aux = [x for x in h]
 		hijo_izq=Tree('~',None,(f.right).left)
 		hijo_der=Tree('~',None,(f.right).right)
 		listaHojas.remove([f])
 		listaHojas.append(hijo_izq)
 		listaHojas.append(hijo_der)
-		
+
 	elif clasificacion=='b2':
-		# ~ print("b2")
+		print("b2")
 		aux = [x for x in h]
 		hijo_izq=f.left
 		hijo_der=f.right
@@ -261,9 +261,9 @@ def clasifica_y_extiende(f,h):
 		aux.append(hijo_izq)
 		listaHojas.remove(h)
 		listaHojas.append(aux)
-		
+
 	elif clasificacion=='b3':
-		# ~ print("b3")
+		print("b3")
 		aux = [x for x in h]
 		hijo_izq=Tree('~', None, f.left)
 		hijo_der=f.right
@@ -272,9 +272,9 @@ def clasifica_y_extiende(f,h):
 		aux.append(hijo_der)
 		listaHojas.remove(h)
 		listaHojas.append(aux)
-		
+
 	elif clasificacion=='b4':
-		# ~ print("b4")
+		print("b4")
 		aux = [x for x in h]
 		hiz = Tree('~', None,Tree('>',f.left,f.right))
 		hde = Tree('~', None,Tree('>',f.right,f.left))
@@ -295,7 +295,6 @@ def Tableaux(f):
 
 	A = string2Tree(f,ltotales)
 	listaHojas = [[A]]
-
 	while len(listaHojas)>0:
 		for q in listaHojas:
 			f = no_literales(q)
@@ -309,5 +308,3 @@ def Tableaux(f):
 				clasifica_y_extiende(f,q)
 
 	return listaInterpsVerdaderas
-
-

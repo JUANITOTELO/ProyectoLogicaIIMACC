@@ -2,6 +2,7 @@ from termcolor import colored,cprint
 import string
 from string import ascii_letters
 import tableauxJ as T
+print("Se dibujara el mapa y se evaluaran las regalas")
 class Tree:
 	def __init__(self,l,iz,dr):
 		self.label = l
