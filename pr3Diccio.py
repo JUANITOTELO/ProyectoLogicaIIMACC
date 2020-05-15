@@ -6,10 +6,10 @@ Created on Sun Mar 29 14:32:19 2020
 @author: juanitotelo
 """
 from PIL import Image,ImageDraw
-import regla1pr
 import random
 import string
 from string import ascii_letters
+from termcolor import colored,cprint
 Nf = 25 # Numero de filas
 Nc = 1 # Numero de columnas
 LcaminosD = [chr(i) for i in range(65, 65 + Nf*Nc)] #Letras de los caminos
@@ -121,22 +121,59 @@ def dibujar_flecha(I,C):
 	elif(C in LcaminosI or C in L):
 		n = L.index(C)
 		C = LcaminosI[n]
-		draw.line(DLCaminos[C[0]], fill=(nR,nR,nR),width=6)
+		draw.line(DLCaminos[C[0]], fill=(255,255,255),width=6)
 		draw.ellipse([(DLCaminos[C[0]][0][0]-15,DLCaminos[C[0]][0][1]-15), (DLCaminos[C[0]][0][0]+15,DLCaminos[C[0]][0][1]+15)], fill = (255,255,255))
 		draw.ellipse([(DLCaminos[C[0]][0][0]-8,DLCaminos[C[0]][0][1]-8), (DLCaminos[C[0]][0][0]+8,DLCaminos[C[0]][0][1]+8)], fill = (nR,nR,nR))
 	else:
-		print("LOL! esto no es un camino.")
+		print(colred("LOL! esto no es un camino.", "red", attrs =['bold', 'blink']))
 
 	text_img = Image.new('RGB', (1000,686), (0, 0, 0, 0))
 	text_img.paste(mapa,(0,0))
 	return text_img
 
-def dibujar_solucion():
-	MP = ['A','C','D','F','K','M','a']
-	f1 = dibujar_flecha("Provinces_of_Spain-2.png",MP[0])
-	MP.pop(0)
-	f1.save("mapacF0.png",format="png")
-	for i in MP:
-		I2 = dibujar_flecha("mapacF0.png", i)
-		I2.save("mapacF0.png",format="png")
-		print("Camino dibujado.")
+def dibujar_solucion(diccionario, nombreImagen):
+	MP = []
+	MPI = []
+	for i in diccionario:
+		if(diccionario[i] == 1 and i in LcaminosD):
+			MP.append(i)
+		else:
+			MPI.append(i)
+	if (MP):
+		f1 = dibujar_flecha("Provinces_of_Spain-2.png",MP[0])
+		print(colored("Camino dibujado.","green", attrs =['bold']))
+		MP.pop(0)
+		f1.save("{}.png".format(nombreImagen),format="png")
+		for i in MP:
+			I2 = dibujar_flecha("{}.png".format(nombreImagen), i)
+			I2.save("{}.png".format(nombreImagen),format="png")
+			print(colored("Camino dibujado.","green", attrs =['bold']))
+	
+	else:
+		print(colored("No hay valores verdaderos.","red", attrs =['bold','blink']))
+	MPT = MPI+MP
+	if (MPI):
+		f1 = dibujar_flecha("Provinces_of_Spain-2.png",MPI[0])
+		print(colored("Camino dibujado.","green", attrs =['bold']))
+		MPI.pop(0)
+		f1.save("{}I.png".format(nombreImagen),format="png")
+		for i in MPI:
+			I2 = dibujar_flecha("{}I.png".format(nombreImagen), i)
+			I2.save("{}I.png".format(nombreImagen),format="png")
+			print(colored("Camino dibujado.","green", attrs =['bold']))
+	
+	else:
+		print(colored("No hay valores verdaderos.","red", attrs =['bold','blink']))
+		
+	if (MPT):
+		f1 = dibujar_flecha("Provinces_of_Spain-2.png",MPT[0])
+		print(colored("Camino dibujado.","green", attrs =['bold']))
+		MPI.pop(0)
+		f1.save("{}T.png".format(nombreImagen),format="png")
+		for i in MPT:
+			I2 = dibujar_flecha("{}T.png".format(nombreImagen), i)
+			I2.save("{}T.png".format(nombreImagen),format="png")
+			print(colored("Camino dibujado.","green", attrs =['bold']))
+	
+	else:
+		print(colored("No hay valores verdaderos.","red", attrs =['bold','blink']))

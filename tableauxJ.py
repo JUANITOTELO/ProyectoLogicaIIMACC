@@ -309,16 +309,3 @@ def Tableaux(f):
 
 	return listaInterpsVerdaderas
 
-formula = "a~a&~"
-
-# Se crea el tableau
-ta = Tableaux(formula)
-
-# Imprime el resultado en consola
-if len(ta) == 0:
-    print('La fórmula es insatisfacible')
-else:
-    print('La fórmula es satisfacible.')
-    print('Las hojas abiertas del tableaux son:')
-    for l in ta:
-        print(imprime_hoja(l))

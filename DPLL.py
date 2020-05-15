@@ -57,7 +57,7 @@ def DPLL(s, i):
 
     s, i = unitPropagate(s,i)
 
-    if void in s:
+    if vacio in s:
         return "Insatisfacible", {}
 
     elif len(s) == 0:
@@ -108,4 +108,7 @@ def DPLL(s, i):
         else:
             Ipp[lit] = 1
         return DPLL(Spp, Ipp)
+        
+
+# ~ print(DPLL(["~P~p","pP",],{}))
 
