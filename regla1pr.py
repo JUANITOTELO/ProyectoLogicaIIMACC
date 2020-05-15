@@ -76,8 +76,8 @@ print (colored("Formula en notación polaca inversa:\n","yellow",attrs=['bold'])
 # ~ R1S = string2Tree(R1, LcaminosT)
 # ~ print(colored("Formula en notación normal:\n","yellow",attrs=['bold']),Inorder(R1S))
 # ~ R1 = "PR>~R'o"
-# ~ R1 = "P~Q~&PQo&" (p ∨ q) ∧ (¬p ∧ ¬q)
-R1 = "p~P="
+# ~ R1 = "P~Q~&PQo&" (p ∨ q) ∧ (¬p ∧ ¬q)  (¬p ∨ ¬q) ∧ (p ∨ q)
+R1 = "P~p~+pP+&"
 
 
 R1S = T.string2Tree(R1, LcaminosT)

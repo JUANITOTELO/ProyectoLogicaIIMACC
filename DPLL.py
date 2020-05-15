@@ -85,7 +85,7 @@ def DPLL(s, i):
 
     Ip = copy.deepcopy(i)
 
-    if lit[0] == "-":
+    if lit[0] == "~":
         Ip[lit[1]] = 0
 
     else:
@@ -103,8 +103,9 @@ def DPLL(s, i):
             if lit in h:
                 h.remove(lit)
         Ipp = copy.deepcopy(i)
-        if lit[0] == "-":
+        if lit[0] == "~":
             Ipp[lit[1]] = 0
         else:
             Ipp[lit] = 1
         return DPLL(Spp, Ipp)
+
