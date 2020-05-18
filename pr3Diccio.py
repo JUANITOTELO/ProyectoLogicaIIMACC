@@ -15,6 +15,7 @@ Nc = 1 # Numero de columnas
 LcaminosD = [chr(i) for i in range(65, 65 + Nf*Nc)] #Letras de los caminos
 LcaminosI = [chr(i)+"'" for i in range(65, 65 + Nf*Nc)] #Letras de los caminos inversos
 L = [i for i in string.ascii_lowercase]
+LT = L + LcaminosD
 sevilla = (427,475)
 merida = (413,368)
 cordoba = (484,429)
@@ -135,7 +136,7 @@ def dibujar_solucion(diccionario, nombreImagen):
 	MP = []
 	MPI = []
 	for i in diccionario:
-		if(diccionario[i] == 1 and i in LcaminosD):
+		if(diccionario[i] == 1 and i in LT):
 			MP.append(i)
 		else:
 			MPI.append(i)
