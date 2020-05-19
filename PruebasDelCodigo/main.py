@@ -1,9 +1,9 @@
 import pr3Diccio
 import os
-from \código\DPLL import DPLL
+from DPLL import DPLL
 import string
 from string import ascii_letters
-from \código\pr3Diccio import dibujar_solucion
+from pr3Diccio import dibujar_solucion
 
 """----------Regla 3-----------"""
 LcaminosIR = [i for i in string.ascii_lowercase]
