@@ -13,9 +13,10 @@ from termcolor import colored,cprint
 Nf = 25 # Numero de filas
 Nc = 1 # Numero de columnas
 LcaminosD = [chr(i) for i in range(65, 65 + Nf*Nc)] #Letras de los caminos
-LcaminosI = [chr(i)+"'" for i in range(65, 65 + Nf*Nc)] #Letras de los caminos inversos
-L = [i for i in string.ascii_lowercase]
+LcaminosI = [chr(i)+"'" for i in range(65, 65 + Nf*Nc)] #Letras de los caminos inversos antiguos
+L = [i for i in string.ascii_lowercase]#Letras de los caminos inversos nuevos
 LT = L + LcaminosD
+# ~ Se asignan las coordenadas que corresponden a cada ciudad en el mapa Coordenadas de ciudades dadas en tuplas
 sevilla = (427,475)
 merida = (413,368)
 cordoba = (484,429)
@@ -37,14 +38,16 @@ burgos = (550,106)
 lugo = (350,58)
 valladolid = (486,167)
 santiago_de_sompostela = (294,62)
-
+# ~ ---------------------------------------
+# ~ Se crea una lista para poder acceder a las ciudades por medio de números
 lCiudades = [sevilla,merida,cordoba,jaen,
 			caceres,ciudad_real,albacete,
 			salamanca,toledo,cuenca,zamora,
 			avila,madrid,soria,orense,leon,
 			segovia,burgos,lugo,valladolid,
 			santiago_de_sompostela]
-
+# ~ ---------------------------------------
+# ~ Se crea un diccionario para a cada ciudad asignarle un numero
 NumeroDlCiudades= {}
 
 for i in range(len(lCiudades)):
@@ -72,10 +75,12 @@ for i in range(len(lCiudades)):
 19 Valladolid
 20 Santiago de Compostela
 """
+# ~ --------------------------------
 PcaminosD = [] # Ubicación de caminos
 DLCaminos={} # Diccionario con las letras de los caminos
 
-# Se agregan todos los caminos al diccionario
+# Se agregan todos los caminos al diccionario 
+# ~ un ejemplo seria: A = 0 conectado con 1, esto quiere decir A = Sevilla se conecta con Merida
 DLCaminos[LcaminosD[0]] = [NumeroDlCiudades[0],NumeroDlCiudades[1]]
 DLCaminos[LcaminosD[1]] = [NumeroDlCiudades[0],NumeroDlCiudades[2]]
 DLCaminos[LcaminosD[2]] = [NumeroDlCiudades[0],NumeroDlCiudades[3]]
@@ -101,9 +106,12 @@ DLCaminos[LcaminosD[21]] = [NumeroDlCiudades[16],NumeroDlCiudades[17]]
 DLCaminos[LcaminosD[22]] = [NumeroDlCiudades[17],NumeroDlCiudades[15]]
 DLCaminos[LcaminosD[23]] = [NumeroDlCiudades[18],NumeroDlCiudades[20]]
 DLCaminos[LcaminosD[24]] = [NumeroDlCiudades[19],NumeroDlCiudades[10]]
-
-def dibujar_flecha(I,C):
-	# ~Coordenadas de ciudades dadas en tuplas
+# ~ -------------------------------------------------------------------------------------
+# ~ Se crea la función para crear los caminos que conectan a las ciudades anteriones
+# ~ Esta función reecibe dos parametros: 
+# ~ el primero recibe la imagen que utilizara
+# ~ el segundo recibe el camino que se quiere dibujar
+def dibujar_flecha(I,C): # ~ retorna una imagen con el camino si se le a pasado un camino
 	global LcaminosD
 	global LcaminosI
 	global L
@@ -111,70 +119,92 @@ def dibujar_flecha(I,C):
 	global NumeroDlCiudades
 	global PcaminosD
 	global DLCaminos
-	mapa=Image.open(I)
+	# ~ Se abre la imagen que se le dio como parametro
+	mapa = Image.open(I)
 	draw = ImageDraw.Draw(mapa)
-	nR = random.randint(10,255)
-
+	nR = random.randint(10,255)#número aleatoria para dar color al círculo del centro de cada camino
+	# ~ Comparamos si el camino que se ingreso esta en la lista de los caminos invertidos o en los normales
 	if(C in LcaminosD):
+		# ~ Se dibuujan los caminos que van de sur a norte utilizando todas las definiciones anteriores
+		# ~ -----------------------------------------------------------------------------------------------------------
+		#Esta dibuja una linea utilizando el diccionario que contiene a la tupla que le corresponde a su camino
 		draw.line(DLCaminos[C], fill=0,width=6)
+		# ~ Esta dibuja el círculo grande
 		draw.ellipse([(DLCaminos[C][1][0]-15,DLCaminos[C][1][1]-15), (DLCaminos[C][1][0]+15,DLCaminos[C][1][1]+15)], fill = (0,0,0))
+		# ~ Esta dibuja el círculo del centro(pequeño)
 		draw.ellipse([(DLCaminos[C][1][0]-8,DLCaminos[C][1][1]-8), (DLCaminos[C][1][0]+8,DLCaminos[C][1][1]+8)], fill = (nR,nR,nR))
+		# ~ -----------------------------------------------------------------------------------------------------------
 	elif(C in LcaminosI or C in L):
-		n = L.index(C)
-		C = LcaminosI[n]
+		# ~ Se dibuujan los caminos que van de norte a sur utilizando todas las definiciones anteriores
+		# ~ -----------------------------------------------------------------------------------------------------------
+		n = L.index(C)# se busca cual ess el indice de la letra en la lista de letras minusculas
+		C = LcaminosI[n]# el valor de C pasa a ser de minuscula a letra con prima es decir: a = A'
+		# ~ -----------------------------------------------------------------------------------------------------------
+		#Esta dibuja una linea utilizando el diccionario que contiene a la tupla que le corresponde a su camino
 		draw.line(DLCaminos[C[0]], fill=(255,255,255),width=6)
+		# ~ Esta dibuja el círculo grande
 		draw.ellipse([(DLCaminos[C[0]][0][0]-15,DLCaminos[C[0]][0][1]-15), (DLCaminos[C[0]][0][0]+15,DLCaminos[C[0]][0][1]+15)], fill = (255,255,255))
+		# ~ Esta dibuja el círculo del centro(pequeño)
 		draw.ellipse([(DLCaminos[C[0]][0][0]-8,DLCaminos[C[0]][0][1]-8), (DLCaminos[C[0]][0][0]+8,DLCaminos[C[0]][0][1]+8)], fill = (nR,nR,nR))
+		# ~ -----------------------------------------------------------------------------------------------------------
 	else:
 		print(colred("LOL! esto no es un camino.", "red", attrs =['bold', 'blink']))
-
+	# ~ -------------------------------------------------------------------------------------------------------------------------------------------------
+	# se crea una imagen en blanco que va a ser reemplazada por la imagen del mapa que utilizaremos
 	text_img = Image.new('RGB', (1000,686), (0, 0, 0, 0))
 	text_img.paste(mapa,(0,0))
 	return text_img
+	# ~ -------------------------------------------------------------------------------------------------
 
-def dibujar_solucion(diccionario, nombreImagen):
-	MP = []
-	MPI = []
+# ~ Función para dibujar toda la solución recibe un diccionario con los valores de verdad de cada atomo y la imagen que se utilizara
+def dibujar_solucion(diccionario, nombreImagen):# ~ retorna una imagen con la solución que se le paso por el diccionario
+	# ~ Creamos dos listas para almacenar los caminos que van de norte a sur y de sur a norte
+	MP = [] # ~ caminos de sur a norte
+	MPI = [] # ~ caminos de norte a sur
+	#el siguiente ciclo revisa si el valor que le corresponde a cada letra en el diccionario es cero o uno
+	#si es uno lo agrega a MP y si no a MPI 
 	for i in diccionario:
-		if(diccionario[i] == 1 and i in LT):
+		if(diccionario[i] == 1 and i in LcaminosD):
 			MP.append(i)
 		else:
 			MPI.append(i)
-	if (MP):
+	# ~ -------------------------------------------------------
+	if (MP):#revisa que MP no este vacío y si no lo esta empieza a llamar a la función dibujar flecha
 		f1 = dibujar_flecha("Provinces_of_Spain-2.png",MP[0])
-		print(colored("Camino dibujado.","green", attrs =['bold']))
+		print(colored("Camino {0} dibujado.".format(MP[0]),"green", attrs =['bold']))
 		MP.pop(0)
 		f1.save("{}.png".format(nombreImagen),format="png")
 		for i in MP:
 			I2 = dibujar_flecha("{}.png".format(nombreImagen), i)
 			I2.save("{}.png".format(nombreImagen),format="png")
-			print(colored("Camino dibujado.","green", attrs =['bold']))
-	
+			print(colored("Camino {0} dibujado.".format(i),"green", attrs =['bold']))
+	# ~ ------------------------------------------------------------------------------------------------------
 	else:
-		print(colored("No hay valores verdaderos.","red", attrs =['bold','blink']))
-	MPT = MPI+MP
-	if (MPI):
+		print(colored("No hay valores verdaderos en ","red", attrs =['bold','blink']), "MP")
+	MPT = MPI+MP #une las dos listas para generar una lista de los caminos totales
+	if (MPI):#revisa que MPI no este vacío y si no lo esta empieza a llamar a la función dibujar flecha
 		f1 = dibujar_flecha("Provinces_of_Spain-2.png",MPI[0])
-		print(colored("Camino dibujado.","green", attrs =['bold']))
+		print(colored("Camino {0} dibujado.".format(MPI[0]),"green", attrs =['bold']))
 		MPI.pop(0)
 		f1.save("{}I.png".format(nombreImagen),format="png")
 		for i in MPI:
 			I2 = dibujar_flecha("{}I.png".format(nombreImagen), i)
 			I2.save("{}I.png".format(nombreImagen),format="png")
-			print(colored("Camino dibujado.","green", attrs =['bold']))
-	
+			print(colored("Camino {0} dibujado.".format(i),"green", attrs =['bold']))
+	# ~ ------------------------------------------------------------------------------------------------------
 	else:
-		print(colored("No hay valores verdaderos.","red", attrs =['bold','blink']))
+		print(colored("No hay valores verdaderos en ","red", attrs =['bold','blink']),"MPI")
 		
-	if (MPT):
+	if (MPT):#revisa que MPT no este vacío y si no lo esta empieza a llamar a la función dibujar flecha
 		f1 = dibujar_flecha("Provinces_of_Spain-2.png",MPT[0])
-		print(colored("Camino dibujado.","green", attrs =['bold']))
-		MPI.pop(0)
+		print(colored("Camino {0} dibujado.".format(MPT[0]),"green", attrs =['bold']))
+		MPT.pop(0)
 		f1.save("{}T.png".format(nombreImagen),format="png")
 		for i in MPT:
 			I2 = dibujar_flecha("{}T.png".format(nombreImagen), i)
 			I2.save("{}T.png".format(nombreImagen),format="png")
-			print(colored("Camino dibujado.","green", attrs =['bold']))
-	
+			print(colored("Camino {0} dibujado.".format(i),"green", attrs =['bold']))
+	# ~ ------------------------------------------------------------------------------------------------------
 	else:
-		print(colored("No hay valores verdaderos.","red", attrs =['bold','blink']))
+		print(colored("No hay valores verdaderos en ","red", attrs =['bold','blink']),"MPT")
+	# ~ ------------------------------------------------------------------------------------------------------
