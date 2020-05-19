@@ -45,3 +45,5 @@ try:
 except Exception as e:
     raise
 # ~ -----------------------------------
+
+os.system("python3 regla1pr.py")
