@@ -164,7 +164,7 @@ def dibujar_solucion(diccionario, nombreImagen):# ~ retorna una imagen con la so
 	#el siguiente ciclo revisa si el valor que le corresponde a cada letra en el diccionario es cero o uno
 	#si es uno lo agrega a MP y si no a MPI 
 	for i in diccionario:
-		if(diccionario[i] == 1 and i in LcaminosD):
+		if(diccionario[i] == 1 and i in LT):
 			MP.append(i)
 		else:
 			MPI.append(i)
@@ -195,16 +195,16 @@ def dibujar_solucion(diccionario, nombreImagen):# ~ retorna una imagen con la so
 	else:
 		print(colored("No hay valores verdaderos en ","red", attrs =['bold','blink']),"MPI")
 		
-	if (MPT):#revisa que MPT no este vacío y si no lo esta empieza a llamar a la función dibujar flecha
-		f1 = dibujar_flecha("Provinces_of_Spain-2.png",MPT[0])
-		print(colored("Camino {0} dibujado.".format(MPT[0]),"green", attrs =['bold']))
-		MPT.pop(0)
-		f1.save("{}T.png".format(nombreImagen),format="png")
-		for i in MPT:
-			I2 = dibujar_flecha("{}T.png".format(nombreImagen), i)
-			I2.save("{}T.png".format(nombreImagen),format="png")
-			print(colored("Camino {0} dibujado.".format(i),"green", attrs =['bold']))
+	# ~ if (MPT):#revisa que MPT no este vacío y si no lo esta empieza a llamar a la función dibujar flecha
+		# ~ f1 = dibujar_flecha("Provinces_of_Spain-2.png",MPT[0])
+		# ~ print(colored("Camino {0} dibujado.".format(MPT[0]),"green", attrs =['bold']))
+		# ~ MPT.pop(0)
+		# ~ f1.save("{}T.png".format(nombreImagen),format="png")
+		# ~ for i in MPT:
+			# ~ I2 = dibujar_flecha("{}T.png".format(nombreImagen), i)
+			# ~ I2.save("{}T.png".format(nombreImagen),format="png")
+			# ~ print(colored("Camino {0} dibujado.".format(i),"green", attrs =['bold']))
 	# ~ ------------------------------------------------------------------------------------------------------
-	else:
-		print(colored("No hay valores verdaderos en ","red", attrs =['bold','blink']),"MPT")
+	# ~ else:
+		# ~ print(colored("No hay valores verdaderos en ","red", attrs =['bold','blink']),"MPT")
 	# ~ ------------------------------------------------------------------------------------------------------
