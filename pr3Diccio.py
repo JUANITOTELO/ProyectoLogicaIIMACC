@@ -181,19 +181,21 @@ def dibujar_solucion(diccionario, nombreImagen):# ~ retorna una imagen con la so
 	# ~ ------------------------------------------------------------------------------------------------------
 	else:
 		print(colored("No hay valores verdaderos en ","red", attrs =['bold','blink']), "MP")
-	MPT = MPI+MP #une las dos listas para generar una lista de los caminos totales
-	if (MPI):#revisa que MPI no este vacío y si no lo esta empieza a llamar a la función dibujar flecha
-		f1 = dibujar_flecha("Provinces_of_Spain-2.png",MPI[0])
-		print(colored("Camino {0} dibujado.".format(MPI[0]),"green", attrs =['bold']))
-		MPI.pop(0)
-		f1.save("{}I.png".format(nombreImagen),format="png")
-		for i in MPI:
-			I2 = dibujar_flecha("{}I.png".format(nombreImagen), i)
-			I2.save("{}I.png".format(nombreImagen),format="png")
-			print(colored("Camino {0} dibujado.".format(i),"green", attrs =['bold']))
+		
+
+	# ~ MPT = MPI+MP #une las dos listas para generar una lista de los caminos totales
+	# ~ if (MPI):#revisa que MPI no este vacío y si no lo esta empieza a llamar a la función dibujar flecha
+		# ~ f1 = dibujar_flecha("Provinces_of_Spain-2.png",MPI[0])
+		# ~ print(colored("Camino {0} dibujado.".format(MPI[0]),"green", attrs =['bold']))
+		# ~ MPI.pop(0)
+		# ~ f1.save("{}I.png".format(nombreImagen),format="png")
+		# ~ for i in MPI:
+			# ~ I2 = dibujar_flecha("{}I.png".format(nombreImagen), i)
+			# ~ I2.save("{}I.png".format(nombreImagen),format="png")
+			# ~ print(colored("Camino {0} dibujado.".format(i),"green", attrs =['bold']))
 	# ~ ------------------------------------------------------------------------------------------------------
-	else:
-		print(colored("No hay valores verdaderos en ","red", attrs =['bold','blink']),"MPI")
+	# ~ else:
+		# ~ print(colored("No hay valores verdaderos en ","red", attrs =['bold','blink']),"MPI")
 		
 	# ~ if (MPT):#revisa que MPT no este vacío y si no lo esta empieza a llamar a la función dibujar flecha
 		# ~ f1 = dibujar_flecha("Provinces_of_Spain-2.png",MPT[0])

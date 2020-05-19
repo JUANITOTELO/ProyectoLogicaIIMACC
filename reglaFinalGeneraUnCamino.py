@@ -27,8 +27,8 @@ dibujar_solucion(SR4[1], "mapacF4")
 # ~ Se abren las imagenes con una herramienta en linux ubuntu llamada "fim"
 try:
     os.system("fim mapacF4.png")
-    os.system("fim mapacF4I.png")
-    os.system("fim mapacF4T.png")
+    # ~ os.system("fim mapacF4I.png")
+    # ~ os.system("fim mapacF4T.png")
     pass
 except Exception as e:
     raise
@@ -39,8 +39,8 @@ dibujar_solucion(SR5[1], "mapacF5")
 
 try:
     os.system("fim mapacF5.png")
-    os.system("fim mapacF5I.png")
-    os.system("fim mapacF5T.png")
+    # ~ os.system("fim mapacF5I.png")
+    # ~ os.system("fim mapacF5T.png")
     pass
 except Exception as e:
     raise
